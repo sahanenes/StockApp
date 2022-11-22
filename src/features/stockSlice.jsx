@@ -17,22 +17,9 @@ const stockSlice = createSlice({
       state.loading = true;
       state.error = false;
     },
-    loginSuccess: (state, { payload }) => {
+    getSuccess: (state, { payload: { data, url } }) => {
       state.loading = false;
-      state.currentUser = payload?.user?.username;
-      state.isAdmin = payload?.user?.is_superuser;
-      state.token = payload?.key;
-    },
-    logoutSuccess: (state) => {
-      state.loading = false;
-      state.currentUser = null;
-      state.token = null;
-    },
-    registerSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.currentUser = payload?.username;
-      state.token = payload?.token;
-      state.error = false;
+      state[url] = data;
     },
     fetchFail: (state) => {
       state.loading = false;
@@ -41,11 +28,5 @@ const stockSlice = createSlice({
   },
 });
 
-export const {
-  fetchStart,
-  loginSuccess,
-  logoutSuccess,
-  registerSuccess,
-  fetchFail,
-} = authSlice.actions;
-export default authSlice.reducer;
+export const { fetchStart, getSuccess, fetchFail } = stockSlice.actions;
+export default stockSlice.reducer;
