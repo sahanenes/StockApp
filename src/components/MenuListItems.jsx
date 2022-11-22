@@ -50,6 +50,13 @@ const icons = [
   },
 ];
 
+const iconStyle = {
+  color: "#eee",
+  "& .MuiSvgIcon-root": { color: "#eeeeee8a" },
+  "&:hover": { color: "red" },
+  "&:hover .MuiSvgIcon-root": { color: "red" },
+};
+
 const MenuListItems = () => {
   const navigate = useNavigate();
   return (
@@ -58,13 +65,13 @@ const MenuListItems = () => {
         {icons?.map((item, index) => (
           <ListItem key={index} disablePadding>
             {item.url.includes("https") && (
-              <ListItemButton to={item.url}>
+              <ListItemButton to={item.url} sx={iconStyle}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
             )}
             {!item.url.includes("https") && (
-              <ListItemButton onClick={() => navigate(item.url)}>
+              <ListItemButton onClick={() => navigate(item.url)} sx={iconStyle}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
