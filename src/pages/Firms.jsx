@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import FirmCard from "../components/FirmCard";
 import useStockCalls from "../hooks/useStockCalls";
 // import axios from "axios";
 // import { useDispatch, useSelector } from "react-redux";
@@ -19,10 +20,12 @@ const Firms = () => {
         Firms
       </Typography>
       <Button variant="contained">New Firm</Button>
-      {firms?.firms.length > 0 && (
-        <Grid container>
+      {firms?.length > 0 && (
+        <Grid container justifyContent="center" gap={3}>
           {firms?.map((firm) => (
-            <Grid item></Grid>
+            <Grid item>
+              <FirmCard key={firm.id} firm={firm} />
+            </Grid>
           ))}
         </Grid>
       )}
