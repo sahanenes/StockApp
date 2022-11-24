@@ -11,6 +11,7 @@ const stockSlice = createSlice({
     loading: false,
     categories: null,
     error: false,
+    brands: null,
   },
   reducers: {
     fetchStart: (state) => {
