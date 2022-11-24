@@ -1,10 +1,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-
 import Modal from "@mui/material/Modal";
 import { flexColumn, modalStyle } from "../../styles/globalStyle";
 import { Button, TextField } from "@mui/material";
 import useStockCalls from "../../hooks/useStockCalls";
+
 export default function FirmModal({ open, setOpen, info, setInfo }) {
   const { postFirm, putFirm } = useStockCalls();
   const handleSubmit = (e) => {
