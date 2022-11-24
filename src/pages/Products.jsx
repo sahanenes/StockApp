@@ -30,7 +30,7 @@ const Products = () => {
   const [toggle, setToggle] = useState({
     brand: false,
     name: false,
-    stock: false,
+    stock: 1,
   });
 
   useEffect(() => {
@@ -38,6 +38,9 @@ const Products = () => {
     getCategories();
     getProducts();
   }, []);
+  const handleSort = (arg) => {
+    setToggle({ ...toggle, [arg]: toggle[arg] * -1 });
+  };
 
   return (
     <Box>
@@ -70,10 +73,10 @@ const Products = () => {
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Box sx={arrowStyle}>
+                  <Box sx={arrowStyle} onClick={() => handleSort("stock")}>
                     <div>Stock</div>
-                    {true && <UpgradeIcon />}
-                    {false && <VerticalAlignBottomIcon />}
+                    {toggle.stock === 1 && <UpgradeIcon />}
+                    {toggle.stock !== 1 && <VerticalAlignBottomIcon />}
                   </Box>
                 </TableCell>
                 <TableCell align="center">Operation</TableCell>
