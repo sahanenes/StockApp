@@ -6,11 +6,16 @@ import { flexColumn, modalStyle } from "../../styles/globalStyle";
 import { Button, TextField } from "@mui/material";
 import useStockCalls from "../../hooks/useStockCalls";
 export default function FirmModal({ open, setOpen, info, setInfo }) {
-  const { postFirm } = useStockCalls();
+  const { postFirm, putFirm } = useStockCalls();
   const handleSubmit = (e) => {
     e.preventDefault();
-    postFirm(info);
+    if (info.id) {
+      putFirm(info);
+    } else {
+      postFirm(info);
+    }
     setOpen(false);
+    setInfo({});
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +39,7 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
               variant="outlined"
               value={info?.name || ""}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Phone"
@@ -43,6 +49,7 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
               variant="outlined"
               value={info?.phone || ""}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Address"
@@ -52,6 +59,7 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
               variant="outlined"
               value={info?.address || ""}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Image"
@@ -61,6 +69,7 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
               variant="outlined"
               value={info?.image || ""}
               onChange={handleChange}
+              required
             />
             <Button type="submit" variant="contained" size="large">
               Save Firm
