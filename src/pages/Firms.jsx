@@ -22,13 +22,15 @@ const Firms = () => {
       <Typography variant="h4" color="error" mb={3}>
         Firms
       </Typography>
-      <Button variant="contained">New Firm</Button>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        New Firm
+      </Button>
       <FirmModal open={open} setOpen={setOpen} />
       {firms?.length > 0 && (
         <Grid container justifyContent="center" gap={3}>
           {firms?.map((firm) => (
-            <Grid item>
-              <FirmCard key={firm.id} firm={firm} />
+            <Grid item key={firm.id}>
+              <FirmCard firm={firm} />
             </Grid>
           ))}
         </Grid>
