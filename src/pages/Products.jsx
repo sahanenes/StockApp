@@ -2,11 +2,23 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FirmCard from "../components/FirmCard";
-import FirmModal from "../components/modals/FirmModal";
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
+import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
+
 import useStockCalls from "../hooks/useStockCalls";
+import { arrowStyle, btnHoverStyle, flexCenter } from "../styles/globalStyle";
 
 const Products = () => {
-  const { firms } = useSelector((state) => state.stock);
+  const { products } = useSelector((state) => state.stock);
   const { getBrands, getCategories, getProducts } = useStockCalls();
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({
@@ -14,6 +26,11 @@ const Products = () => {
     phone: "",
     address: "",
     image: "",
+  });
+  const [toggle, setToggle] = useState({
+    brand: false,
+    name: false,
+    stock: false,
   });
 
   useEffect(() => {
@@ -31,14 +48,58 @@ const Products = () => {
         New Product
       </Button>
       {/* <ProductModal open={open} setOpen={setOpen} info={info} setInfo={setInfo} /> */}
-      {firms?.length > 0 && (
-        <Grid container justifyContent="center" gap={3}>
-          {firms?.map((firm) => (
-            <Grid item key={firm.id}>
-              <FirmCard firm={firm} setOpen={setOpen} setInfo={setInfo} />
-            </Grid>
-          ))}
-        </Grid>
+      {products?.length > 0 && (
+        <TableContainer component={Paper} sx={{ mt: 3 }} elevation={10}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">*</TableCell>
+                <TableCell align="center">Categories</TableCell>
+                <TableCell align="center">
+                  <Box sx={arrowStyle}>
+                    <div>Brand</div>
+                    {true && <UpgradeIcon />}
+                    {false && <VerticalAlignBottomIcon />}
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Box sx={arrowStyle}>
+                    <div>Stock</div>
+                    {true && <UpgradeIcon />}
+                    {false && <VerticalAlignBottomIcon />}
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Box sx={arrowStyle}>
+                    <div>Stock</div>
+                    {true && <UpgradeIcon />}
+                    {false && <VerticalAlignBottomIcon />}
+                  </Box>
+                </TableCell>
+                <TableCell align="center">Operation</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products.map((product, index) => (
+                <TableRow
+                  key={product.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell align="center">{product.category}</TableCell>
+                  <TableCell align="center">{product.brand}</TableCell>
+                  <TableCell align="center">{product.name}</TableCell>
+                  <TableCell align="center">{product.stock}</TableCell>
+                  <TableCell align="center">
+                    <DeleteIcon sx={btnHoverStyle} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </Box>
   );
