@@ -29,6 +29,11 @@ const Products = () => {
     image: "",
   });
   const [selectedBrands, setSelectedBrands] = useState([]);
+  useEffect(() => {
+    getBrands();
+    getCategories();
+    getProducts();
+  }, []);
   const columnObj = {
     brand: 1,
     name: 1,
@@ -36,11 +41,8 @@ const Products = () => {
   };
   const { handleSort, sortedData, column } = useSortColumn(products, columnObj);
 
-  useEffect(() => {
-    getBrands();
-    getCategories();
-    getProducts();
-  }, []);
+  const isBrandSelected = (item) =>
+    selectedBrands?.includes(item.brand) || selectedBrands.length === 0;
 
   return (
     <Box>
@@ -54,7 +56,7 @@ const Products = () => {
         handleSelect={(item) => setSelectedBrands(item)}
         placeholder="Select Brand"
       >
-        {brands.map((item) => (
+        {brands?.map((item) => (
           <MultiSelectBoxItem
             key={item.name}
             value={item.name}
@@ -104,23 +106,25 @@ const Products = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedData.map((product, index) => (
-                <TableRow
-                  key={product.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center" component="th" scope="row">
-                    {index + 1}
-                  </TableCell>
-                  <TableCell align="center">{product.category}</TableCell>
-                  <TableCell align="center">{product.brand}</TableCell>
-                  <TableCell align="center">{product.name}</TableCell>
-                  <TableCell align="center">{product.stock}</TableCell>
-                  <TableCell align="center">
-                    <DeleteIcon sx={btnHoverStyle} />
-                  </TableCell>
-                </TableRow>
-              ))}
+              {sortedData
+                ?.filter((item) => isBrandSelected(item))
+                .map((product, index) => (
+                  <TableRow
+                    key={product.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="center" component="th" scope="row">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell align="center">{product.category}</TableCell>
+                    <TableCell align="center">{product.brand}</TableCell>
+                    <TableCell align="center">{product.name}</TableCell>
+                    <TableCell align="center">{product.stock}</TableCell>
+                    <TableCell align="center">
+                      <DeleteIcon sx={btnHoverStyle} />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
