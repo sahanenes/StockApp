@@ -26,19 +26,42 @@ const Products = () => {
     address: "",
     image: "",
   });
-  const [toggle, setToggle] = useState({
-    brand: false,
-    name: false,
-    stock: 1,
-  });
+
+  const [sortedProducts, setSortedProducts] = useState(products);
+
+  useEffect(() => {
+    setSortedProducts(products);
+  }, [products]);
 
   useEffect(() => {
     getBrands();
     getCategories();
     getProducts();
   }, []);
-  const handleSort = (arg) => {
+  const [toggle, setToggle] = useState({
+    brand: 1,
+    name: 1,
+    stock: 1,
+  });
+  const handleSort = (arg, type) => {
     setToggle({ ...toggle, [arg]: toggle[arg] * -1 });
+    setSortedProducts(
+      sortedProducts
+        ?.map((item) => item)
+        .sort((a, b) => {
+          if (type === "date") {
+            return toggle[arg] * (new Date(a[arg]) - new Date(b[arg]));
+          } else if (type === "number") {
+            return toggle[arg] * (a[arg] - b[arg]);
+          } else {
+            if (toggle[arg] === 1) {
+              return b[arg] > a[arg] ? 1 : b[arg] < a[arg] ? -1 : 0;
+            } else {
+              return a[arg] > b[arg] ? 1 : a[arg] < b[arg] ? -1 : 0;
+            }
+          }
+        })
+    );
   };
 
   return (
@@ -50,7 +73,7 @@ const Products = () => {
         New Product
       </Button>
       {/* <ProductModal open={open} setOpen={setOpen} info={info} setInfo={setInfo} /> */}
-      {products?.length > 0 && (
+      {sortedProducts?.length > 0 && (
         <TableContainer component={Paper} sx={{ mt: 3 }} elevation={10}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -58,21 +81,30 @@ const Products = () => {
                 <TableCell align="center">*</TableCell>
                 <TableCell align="center">Categories</TableCell>
                 <TableCell align="center">
-                  <Box sx={arrowStyle}>
+                  <Box
+                    sx={arrowStyle}
+                    onClick={() => handleSort("brand", "text")}
+                  >
                     <div>Brand</div>
-                    {true && <UpgradeIcon />}
-                    {false && <VerticalAlignBottomIcon />}
+                    {toggle.brand === 1 && <UpgradeIcon />}
+                    {toggle.brand !== 1 && <VerticalAlignBottomIcon />}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Box sx={arrowStyle}>
-                    <div>Stock</div>
-                    {true && <UpgradeIcon />}
-                    {false && <VerticalAlignBottomIcon />}
+                  <Box
+                    sx={arrowStyle}
+                    onClick={() => handleSort("name", "text")}
+                  >
+                    <div>Name</div>
+                    {toggle.name === 1 && <UpgradeIcon />}
+                    {toggle.name !== 1 && <VerticalAlignBottomIcon />}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Box sx={arrowStyle} onClick={() => handleSort("stock")}>
+                  <Box
+                    sx={arrowStyle}
+                    onClick={() => handleSort("stock", "number")}
+                  >
                     <div>Stock</div>
                     {toggle.stock === 1 && <UpgradeIcon />}
                     {toggle.stock !== 1 && <VerticalAlignBottomIcon />}
@@ -82,7 +114,7 @@ const Products = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map((product, index) => (
+              {sortedProducts.map((product, index) => (
                 <TableRow
                   key={product.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
