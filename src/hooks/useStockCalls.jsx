@@ -36,6 +36,7 @@ const useStockCalls = () => {
 
   const deleteFirm = (id) => deleteStockData("firms", id);
   const deleteBrand = (id) => deleteStockData("brands", id);
+  const deleteProduct = (id) => deleteStockData("products", id);
   // ! post calls
   const postStockData = async (url, info) => {
     try {
@@ -68,15 +69,16 @@ const useStockCalls = () => {
   return {
     getFirms,
     getSales,
-    deleteFirm,
-    postFirm,
-    putFirm,
-    getCategories,
     getBrands,
+    getCategories,
     getProducts,
-    deleteBrand,
+    postFirm,
     postBrand,
+    putFirm,
     putBrand,
+    deleteBrand,
+    deleteFirm,
+    deleteProduct,
   };
 };
 

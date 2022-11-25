@@ -24,7 +24,8 @@ import { MultiSelectBox, MultiSelectBoxItem } from "@tremor/react";
 
 const Products = () => {
   const { products, brands } = useSelector((state) => state.stock);
-  const { getBrands, getCategories, getProducts } = useStockCalls();
+  const { getBrands, getCategories, getProducts, deleteProduct } =
+    useStockCalls();
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({
     name: "",
@@ -144,7 +145,10 @@ const Products = () => {
                     <TableCell align="center">{product.brand}</TableCell>
                     <TableCell align="center">{product.name}</TableCell>
                     <TableCell align="center">{product.stock}</TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      align="center"
+                      onClick={() => deleteProduct(product.id)}
+                    >
                       <DeleteIcon sx={btnHoverStyle} />
                     </TableCell>
                   </TableRow>
