@@ -18,6 +18,12 @@ export const flexCenter = {
   justifyContent: "center",
   gap: 2,
 };
+export const flexCenterMultiBox = {
+  display: "flex",
+  justifyContent: "center",
+  gap: 2,
+  flexDirection: { xs: "column", sm: "row" },
+};
 
 export const flexColumn = {
   display: "flex",

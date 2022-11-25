@@ -14,7 +14,11 @@ import UpgradeIcon from "@mui/icons-material/Upgrade";
 import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 
 import useStockCalls from "../hooks/useStockCalls";
-import { arrowStyle, btnHoverStyle, flexCenter } from "../styles/globalStyle";
+import {
+  arrowStyle,
+  btnHoverStyle,
+  flexCenterMultiBox,
+} from "../styles/globalStyle";
 import useSortColumn from "../hooks/useSortColumn";
 import { MultiSelectBox, MultiSelectBoxItem } from "@tremor/react";
 
@@ -29,6 +33,7 @@ const Products = () => {
     image: "",
   });
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     getBrands();
     getCategories();
@@ -44,6 +49,10 @@ const Products = () => {
   const isBrandSelected = (item) =>
     selectedBrands?.includes(item.brand) || selectedBrands.length === 0;
 
+  const filteredProducts = products?.filter((item) =>
+    selectedBrands.includes(item.brand)
+  );
+  console.log(filteredProducts);
   return (
     <Box>
       <Typography variant="h4" color="error" mb={3}>
@@ -52,18 +61,33 @@ const Products = () => {
       <Button variant="contained" onClick={() => setOpen(true)}>
         New Product
       </Button>
-      <MultiSelectBox
-        handleSelect={(item) => setSelectedBrands(item)}
-        placeholder="Select Brand"
-      >
-        {brands?.map((item) => (
-          <MultiSelectBoxItem
-            key={item.name}
-            value={item.name}
-            text={item.name}
-          />
-        ))}
-      </MultiSelectBox>
+      <Box sx={flexCenterMultiBox} mt={3}>
+        <MultiSelectBox
+          handleSelect={(item) => setSelectedBrands(item)}
+          placeholder="Select Brand"
+        >
+          {brands?.map((item) => (
+            <MultiSelectBoxItem
+              key={item.name}
+              value={item.name}
+              text={item.name}
+            />
+          ))}
+        </MultiSelectBox>
+        <MultiSelectBox
+          handleSelect={(item) => setSelectedProducts(item)}
+          placeholder="Select Product"
+        >
+          {filteredProducts?.map((item) => (
+            <MultiSelectBoxItem
+              key={item.name}
+              value={item.name}
+              text={item.name}
+            />
+          ))}
+        </MultiSelectBox>
+      </Box>
+
       {/* <ProductModal open={open} setOpen={setOpen} info={info} setInfo={setInfo} /> */}
       {sortedData?.length > 0 && (
         <TableContainer component={Paper} sx={{ mt: 3 }} elevation={10}>
