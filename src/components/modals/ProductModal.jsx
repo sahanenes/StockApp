@@ -32,6 +32,7 @@ export default function ProductModal({ open, setOpen, info, setInfo }) {
       [name]: value,
     });
   };
+  console.log(products);
   return (
     <div>
       <Modal
@@ -102,7 +103,6 @@ export default function ProductModal({ open, setOpen, info, setInfo }) {
               onChange={handleChange}
               required
             />
-
             <Button type="submit" variant="contained" size="large">
               Add New Product
             </Button>

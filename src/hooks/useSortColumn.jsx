@@ -9,15 +9,13 @@ const useSortColumn = (data, columnObj) => {
     setSortedData(data);
   }, [data]);
 
-  const handleSort = (arg, type) => {
+  const handleSort = (arg) => {
     setColumn({ ...column, [arg]: column[arg] * -1 });
     setSortedData(
       sortedData
         ?.map((item) => item)
         .sort((a, b) => {
-          if (type === "date") {
-            return column[arg] * (new Date(a[arg]) - new Date(b[arg]));
-          } else if (type === "number") {
+          if (!isNaN(Number(a[arg]))) {
             return column[arg] * (a[arg] - b[arg]);
           } else {
             if (column[arg] === 1) {
