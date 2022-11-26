@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
-
+import ProductModal from "../components/modals/ProductModal";
 import useStockCalls from "../hooks/useStockCalls";
 import {
   arrowStyle,
@@ -27,12 +27,7 @@ const Products = () => {
   const { getBrands, getCategories, getProducts, deleteProduct } =
     useStockCalls();
   const [open, setOpen] = useState(false);
-  const [info, setInfo] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    image: "",
-  });
+  const [info, setInfo] = useState({});
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
@@ -56,7 +51,6 @@ const Products = () => {
     ?.filter((item) => selectedBrands.includes(item.brand))
     .map((item) => item.name);
 
-  console.log(filteredProducts);
   return (
     <Box>
       <Typography variant="h4" color="error" mb={3}>
@@ -65,6 +59,12 @@ const Products = () => {
       <Button variant="contained" onClick={() => setOpen(true)}>
         New Product
       </Button>
+      <ProductModal
+        open={open}
+        setOpen={setOpen}
+        info={info}
+        setInfo={setInfo}
+      />
       <Box sx={flexCenterMultiBox} mt={3}>
         <MultiSelectBox
           handleSelect={(item) => setSelectedBrands(item)}

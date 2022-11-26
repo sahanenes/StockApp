@@ -51,6 +51,7 @@ const useStockCalls = () => {
 
   const postFirm = (info) => postStockData("firms", info);
   const postBrand = (info) => postStockData("brands", info);
+  const postProduct = (info) => postStockData("products", info);
   // !put calls
   const putStockData = async (url, info) => {
     try {
@@ -74,6 +75,7 @@ const useStockCalls = () => {
     getProducts,
     postFirm,
     postBrand,
+    postProduct,
     putFirm,
     putBrand,
     deleteBrand,

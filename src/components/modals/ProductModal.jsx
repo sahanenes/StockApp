@@ -2,24 +2,35 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { flexColumn, modalStyle } from "../../styles/globalStyle";
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import useStockCalls from "../../hooks/useStockCalls";
+import { useSelector } from "react-redux";
 
-export default function FirmModal({ open, setOpen, info, setInfo }) {
-  const { postFirm, putFirm } = useStockCalls();
+export default function ProductModal({ open, setOpen, info, setInfo }) {
+  const { products, brands, categories } = useSelector((state) => state.stock);
+  const { postProduct } = useStockCalls();
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (info.id) {
-      putFirm(info);
-    } else {
-      postFirm(info);
-    }
+
+    postProduct(info);
+
     setOpen(false);
     setInfo({});
+    console.log(info);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInfo({ ...info, [name]: value });
+    setInfo({
+      ...info,
+      [name]: value,
+    });
   };
   return (
     <div>
@@ -33,9 +44,56 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <Box component="form" onSubmit={handleSubmit} sx={flexColumn}>
+          <Box sx={flexColumn} component={"form"} onSubmit={handleSubmit}>
+            <FormControl fullWidth>
+              <InputLabel variant="outlined" id="category-select">
+                Category
+              </InputLabel>
+              <Select
+                labelId="category-select"
+                label="Category"
+                id="firm-select"
+                name="category_id"
+                value={info?.category_id || ""}
+                onChange={handleChange}
+                required
+              >
+                {categories?.map((category) => {
+                  return (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel variant="outlined" id="brand-select">
+                Brands
+              </InputLabel>
+              <Select
+                labelId="brand-select"
+                label="Brand"
+                id="brand-select"
+                name="brand_id"
+                value={info?.brand_id || ""}
+                onChange={handleChange}
+                required
+              >
+                {brands?.map((brand) => {
+                  return (
+                    <MenuItem key={brand.id} value={brand.id}>
+                      {brand.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
             <TextField
-              label="Firm Name"
+              margin="dense"
+              label="Product Name"
               name="name"
               id="name"
               type="text"
@@ -44,38 +102,9 @@ export default function FirmModal({ open, setOpen, info, setInfo }) {
               onChange={handleChange}
               required
             />
-            <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              value={info?.phone || ""}
-              onChange={handleChange}
-              required
-            />
-            <TextField
-              label="Address"
-              name="address"
-              id="address"
-              type="text"
-              variant="outlined"
-              value={info?.address || ""}
-              onChange={handleChange}
-              required
-            />
-            <TextField
-              label="Image"
-              name="image"
-              id="image"
-              type="url"
-              variant="outlined"
-              value={info?.image || ""}
-              onChange={handleChange}
-              required
-            />
+
             <Button type="submit" variant="contained" size="large">
-              Save Firm
+              Add New Product
             </Button>
           </Box>
         </Box>
