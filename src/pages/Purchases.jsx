@@ -1,7 +1,9 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PurchaseModal from "../components/modals/PurchaseModal";
+import MultiSelect from "../components/MultiSelect";
+import PurchasesTable from "../components/tables/PurchasesTable";
 import useStockCalls from "../hooks/useStockCalls";
 
 const Purchases = () => {
@@ -31,10 +33,30 @@ const Purchases = () => {
 
   return (
     <>
-      <PurchaseModal />
+      <PurchaseModal
+        info={info}
+        setInfo={setInfo}
+        open={open}
+        setOpen={setOpen}
+      />
       <Typography variant="h4" color="error" mt={4}>
         Purchases
       </Typography>
+      <Button
+        variant="contained"
+        onClick={() => {
+          setInfo({});
+          setOpen(true);
+        }}
+      >
+        New Purchase
+      </Button>
+      {purchases?.length > 0 && (
+        <>
+          <MultiSelect />
+          <PurchasesTable />
+        </>
+      )}
     </>
   );
 };

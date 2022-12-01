@@ -65,6 +65,7 @@ const useStockCalls = () => {
   const postFirm = (info) => postStockData("firms", info);
   const postBrand = (info) => postStockData("brands", info);
   const postProduct = (info) => postStockData("products", info);
+  const postPurchase = (info) => postStockData("purchases", info);
   // !put calls
   const putStockData = async (url, info) => {
     try {
@@ -79,6 +80,7 @@ const useStockCalls = () => {
 
   const putFirm = (info) => putStockData("firms", info);
   const putBrand = (info) => putStockData("brands", info);
+  const putPurchase = (info) => putStockData("purchases", info);
 
   return {
     getFirms,
@@ -90,8 +92,10 @@ const useStockCalls = () => {
     postFirm,
     postBrand,
     postProduct,
+    postPurchase,
     putFirm,
     putBrand,
+    putPurchase,
     deleteBrand,
     deleteFirm,
     deleteProduct,
