@@ -23,6 +23,18 @@ const useStockCalls = () => {
   const getBrands = () => getStockData("brands");
   const getProducts = () => getStockData("products");
   const getPurchases = () => getStockData("purchases");
+
+  // const getAllStockData = async () => {
+  //   dispatch(fetchStart());
+  //   try {
+  //     const [purchases,firms,brands,sales,product,categories]=
+  //     await Promise.all([
+
+  //     ])
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
   //! delete calls
   const deleteStockData = async (url, id) => {
     try {
