@@ -105,7 +105,7 @@ const PurchasesTable = ({
             <TableCell>
               <Box sx={arrowStyle} onClick={() => handleSort("price")}>
                 <Typography variant="body" noWrap>
-                  Amount
+                  Price
                 </Typography>
                 {column.price === 1 && <UpgradeIcon />}
                 {column.price !== 1 && <VerticalAlignBottomIcon />}
