@@ -62,7 +62,12 @@ const Purchases = () => {
             setFirstNames={setSelectedBrands}
             setSecondNames={setSelectedProducts}
           />
-          <PurchasesTable />
+          <PurchasesTable
+            setOpen={setOpen}
+            setInfo={setInfo}
+            selectedProducts={selectedProducts}
+            selectedBrands={selectedBrands}
+          />
         </>
       )}
     </>
