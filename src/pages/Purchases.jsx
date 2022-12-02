@@ -30,7 +30,7 @@ const Purchases = () => {
     getPurchases();
     getProducts();
   }, []);
-
+  console.log(purchases);
   return (
     <>
       <PurchaseModal
@@ -53,7 +53,15 @@ const Purchases = () => {
       </Button>
       {purchases?.length > 0 && (
         <>
-          <MultiSelect />
+          <MultiSelect
+            data1={purchases}
+            data2={purchases}
+            key1="brand"
+            key2="product"
+            firstNames={selectedBrands}
+            setFirstNames={setSelectedBrands}
+            setSecondNames={setSelectedProducts}
+          />
           <PurchasesTable />
         </>
       )}
