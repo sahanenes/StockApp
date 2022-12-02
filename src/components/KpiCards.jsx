@@ -10,24 +10,29 @@ import { useSelector } from "react-redux";
 
 const KpiCards = () => {
   const { sales, purchases } = useSelector((state) => state.stock);
+
+  const total = (data) =>
+    data?.map((item) => Number(item.price_total)).reduce((a, b) => a + b, 0);
+
+  const totalProfit = total(sales) - total(purchases);
   const data = [
     {
       title: "Sales",
-      metric: "$0",
+      metric: `$${total(sales) || ""}`,
       icon: <MonetizationOnIcon sx={{ fontSize: "3rem" }} />,
       color: indigo[900],
       bgColor: indigo[200],
     },
     {
       title: "Profit",
-      metric: "$0",
+      metric: `$${totalProfit || ""}`,
       icon: <PaymentsIcon sx={{ fontSize: "3rem" }} />,
       color: pink[900],
       bgColor: pink[200],
     },
     {
       title: "Purchases",
-      metric: "$0",
+      metric: `$${total(purchases) || ""}`,
       icon: <ShoppingCartIcon sx={{ fontSize: "3rem" }} />,
       color: amber[900],
       bgColor: amber[200],
