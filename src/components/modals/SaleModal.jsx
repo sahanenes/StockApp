@@ -29,7 +29,6 @@ export default function ModalSale({ open, setOpen, info, setInfo }) {
 
     setOpen(false);
     setInfo({});
-    console.log(info);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -97,7 +96,14 @@ export default function ModalSale({ open, setOpen, info, setInfo }) {
                 onChange={handleChange}
                 required
               >
-                <MenuItem onClick={() => navigate("/stock/products")}>
+                <MenuItem
+                  sx={{
+                    background: "linear-gradient(45deg, blue, red);",
+                    borderRadius: "10px",
+                    color: "white",
+                  }}
+                  onClick={() => navigate("/stock/products")}
+                >
                   Add New Product
                 </MenuItem>
                 <hr />
