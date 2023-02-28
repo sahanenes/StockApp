@@ -15,7 +15,7 @@ const useAuthCalls = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const BASE_URL = "https://14276.fullstack.clarusway.com/";
+  const BASE_URL = "http://sahanenes.pythonanywhere.com/";
 
   const login = async (userInfo) => {
     dispatch(fetchStart());
@@ -26,11 +26,11 @@ const useAuthCalls = () => {
       );
 
       dispatch(loginSuccess(data));
-      toastSuccessNotify("Login performed");
+      toastSuccessNotify("Logged in successfully");
       navigate("/stock");
     } catch (err) {
       dispatch(fetchFail());
-      toastErrorNotify("Login can not be performed");
+      toastErrorNotify("Unsuccessful Login");
     }
   };
 
@@ -39,11 +39,11 @@ const useAuthCalls = () => {
     try {
       await axios.post(`${BASE_URL}account/auth/logout/`);
       dispatch(logoutSuccess());
-      toastSuccessNotify("Logout performed");
+      toastSuccessNotify("Logged out successfully");
       navigate("/");
     } catch (err) {
       dispatch(fetchFail());
-      toastErrorNotify("Logout can not be performed");
+      toastErrorNotify("Unsuccessful Logout ");
     }
   };
 
@@ -55,11 +55,11 @@ const useAuthCalls = () => {
         userInfo
       );
       dispatch(registerSuccess(data));
-      toastSuccessNotify("Register performed");
+      toastSuccessNotify("Registered successfully");
       navigate("/stock");
     } catch (err) {
       dispatch(fetchFail());
-      toastErrorNotify("Register can not be performed");
+      toastErrorNotify("Registration failed ");
     }
   };
 

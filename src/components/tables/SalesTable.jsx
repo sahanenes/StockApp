@@ -41,7 +41,7 @@ const SalesTable = ({ setOpen, setInfo, selectedProducts, selectedBrands }) => {
 
   const isProductSelected = (item) =>
     selectedProducts.includes(item.product) || selectedProducts.length === 0;
-
+  console.log(sortedData);
   return (
     <TableContainer component={Paper} elevation={10} sx={{ mt: 4 }}>
       <Table>
@@ -117,7 +117,7 @@ const SalesTable = ({ setOpen, setInfo, selectedProducts, selectedBrands }) => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="center">{item.createds}</TableCell>
-                <TableCell align="center">{item.category[0]?.name}</TableCell>
+                <TableCell align="center">{item.category}</TableCell>
                 <TableCell align="center">{item.brand}</TableCell>
                 <TableCell align="center">{item.product}</TableCell>
                 <TableCell align="center">{item.quantity}</TableCell>
