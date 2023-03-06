@@ -36,6 +36,7 @@ back to redux.
 I used React Router library to enable Client Side Routing
 It allows us to build a single-page web application with navigation without
 the page refreshing as the user navigates.
+![giphy](https://user-images.githubusercontent.com/109246773/223196940-1f56df44-43c4-4c69-9aff-6e8ac388d1ff.gif)
 
 If you wish to check out backend codes ,here is the repository : 
 https://github.com/sahanenes/Stock-app-backend
